@@ -270,7 +270,7 @@ public:
 			return *this;
 		}
 
-		if (mData.get() == NULL || mData.refCount() > 1)
+		if (mData.get() == NULL || (mData.refCount().get() && *mData.refCount() > 1))
 		{
 			*this = copy();
 		}

@@ -5,6 +5,8 @@
 //------------------------------------------------------------------------------
 
 #include "EnumMonitors.h"
+
+#include <shellscalingapi.h>
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -27,7 +29,7 @@ BOOL CALLBACK monitorEnumProc(
 	newInfo.hMonitor = hMonitor;
 	newInfo.hdcMonitor = hdcMonitor;
 
-	MONITORINFO monInfo = { 0 };
+	MONITORINFOEX monInfo = { 0 };
 
 	monInfo.cbSize = sizeof(monInfo);
 
@@ -36,6 +38,16 @@ BOOL CALLBACK monitorEnumProc(
 	newInfo.dwFlags = monInfo.dwFlags;
 	newInfo.rcMonitor = monInfo.rcMonitor;
 	newInfo.rcWork = monInfo.rcWork;
+
+	DEVMODE devmode = {0};
+
+	devmode.dmSize = sizeof(DEVMODE);
+
+	EnumDisplaySettings(monInfo.szDevice, ENUM_CURRENT_SETTINGS, &devmode);
+
+	//Adjust rect for real pixels
+	newInfo.rcMonitor.right = newInfo.rcMonitor.left + devmode.dmPelsWidth;
+	newInfo.rcMonitor.bottom = newInfo.rcMonitor.top + devmode.dmPelsHeight;
 
 	reinterpret_cast<std::list<MonitorInfo>*>(dwData)->push_back(newInfo);
 

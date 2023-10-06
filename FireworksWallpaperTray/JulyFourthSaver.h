@@ -23,6 +23,7 @@ public:
 		HINSTANCE hInstance,
 		HWND hParent,
 		const MonitorInfo* monitorInfo = NULL);
+	~JulyFourthSaver();
 
 	void setRunTimer();
 

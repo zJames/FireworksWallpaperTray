@@ -17,6 +17,8 @@ struct MonitorInfo
 	HDC			hdcMonitor;		// handle to monitor DC
 	Rect		rcMonitor;		// monitor rectangle
 	Rect		rcWork;
+	UINT		dpiX;
+	UINT		dpiY;
 	DWORD		dwFlags;
 };
 

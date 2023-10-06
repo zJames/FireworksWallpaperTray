@@ -78,13 +78,8 @@ JulyFourthSaver::JulyFourthSaver(
 		xPos = 0,
 		yPos = 0;
 
-	if (hParent == NULL)
+	if (monitorInfo != NULL)
 	{
-		BOOL bUnused;
-		SystemParametersInfo(SPI_SCREENSAVERRUNNING, TRUE, &bUnused, 0);
-
-		ShowCursor(FALSE);
-
 		xPos = monitorInfo->rcMonitor.left;
 		yPos = monitorInfo->rcMonitor.top;
 		width = monitorInfo->rcMonitor.width();
@@ -128,6 +123,10 @@ JulyFourthSaver::JulyFourthSaver(
 		0);
 
 	mProcessList.add(new JulyFourth(mBackBuffer));
+}
+
+JulyFourthSaver::~JulyFourthSaver()
+{
 }
 
 void JulyFourthSaver::setRunTimer()
